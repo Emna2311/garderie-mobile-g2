@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Ecran de bienvenue
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -37,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
+    // Passage a la page d'accueil apres 3 secondes
     Timer(const Duration(seconds: 3), () {
       if (!mounted) return;
 
@@ -57,12 +59,26 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.child_care,
-              size: 100,
-              color: Colors.pink,
+            // Image de la garderie
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                'assets/garderie.png',
+                width: 220,
+                height: 220,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(
+                    Icons.child_care,
+                    size: 100,
+                    color: Colors.pink,
+                  );
+                },
+              ),
             ),
+
             const SizedBox(height: 20),
+
             const Text(
               'Ma Garderie',
               style: TextStyle(
@@ -70,9 +86,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+
             const SizedBox(height: 10),
+
             const Text(
               'Bienvenue dans notre garderie',
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),
           ],
@@ -82,6 +101,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
+// Page d'accueil
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -126,12 +146,15 @@ class HomePage extends StatelessWidget {
         title: const Text('Ma Garderie'),
         backgroundColor: Colors.pink.shade100,
         actions: [
+          // Bouton de recherche
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
               showMessage(context, 'Rechercher un menu');
             },
           ),
+
+          // Bouton de notifications
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
@@ -141,12 +164,15 @@ class HomePage extends StatelessWidget {
         ],
       ),
 
+      // Menu lateral
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.pink),
+              decoration: BoxDecoration(
+                color: Colors.pink,
+              ),
               child: Center(
                 child: Text(
                   'Ma Garderie',
@@ -157,6 +183,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Accueil'),
@@ -164,6 +191,7 @@ class HomePage extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
+
             ListTile(
               leading: const Icon(Icons.restaurant_menu),
               title: const Text('Menus'),
@@ -172,6 +200,7 @@ class HomePage extends StatelessWidget {
                 showMessage(context, 'Menus du jour');
               },
             ),
+
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text('À propos'),
@@ -184,6 +213,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
 
+      // Liste des menus
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -194,6 +224,7 @@ class HomePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+
           const SizedBox(height: 12),
 
           for (final menu in menus)
@@ -210,9 +241,10 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
-        ]
+        ],
       ),
 
+      // Bouton d'ajout
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showMessage(context, 'Ajouter un menu');
@@ -222,3 +254,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
